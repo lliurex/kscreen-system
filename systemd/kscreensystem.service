@@ -3,7 +3,7 @@ Description=Kscreen system dbus service
 
 [Service]
 BusName=net.lliurex.KScreenSystem
-ExecStart=/usr/share/kscreensystem/kscreensystem.py
+ExecStart=/usr/lib/kscreen-system/kscreensystem
 Type=dbus
 IOSchedulingClass=idle
 
