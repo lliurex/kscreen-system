@@ -1,0 +1,135 @@
+#!/usr/bin/env python3
+
+import json
+import os
+from pathlib import Path
+
+import dbus
+import dbus.service
+from dbus.mainloop.glib import DBusGMainLoop
+from gi.repository import GLib
+
+
+SERVICE_NAME = "net.lliurex.KScreenSystem"
+OBJECT_PATH = "/net/lliurex/KScreenSystem"
+INTERFACE = "net.lliurex.KScreenSystem"
+
+POLKIT_ACTIONS = {
+        "SetGlobalConfigPath":"net.lliurex.kscreen.setconfig",
+        "removeGlobalConfig":"net.lliurex.kscreen.removeconfig"
+        }
+
+CONFIG_FILE = Path("/etc/skel/.config/kwinoutputconfig.json")
+
+
+class KScreenSystemService(dbus.service.Object):
+
+    def __init__(self, bus, object_path):
+        self.bus = bus
+        super().__init__(bus, object_path)
+
+    def check_authorization(self,polkit_action, sender):
+
+        authority_obj = self.bus.get_object(
+            "org.freedesktop.PolicyKit1",
+            "/org/freedesktop/PolicyKit1/Authority"
+        )
+
+        authority = dbus.Interface(
+            authority_obj,
+            "org.freedesktop.PolicyKit1.Authority"
+        )
+
+        subject = (
+            "system-bus-name",
+            {
+                "name": dbus.String(sender)
+            }
+        )
+
+        result = authority.CheckAuthorization(
+            subject,
+            polkit_action,
+            {},
+            dbus.UInt32(1),  # AllowUserInteraction
+            ""
+        )
+
+        return bool(result[0])
+
+
+    @dbus.service.method(
+        INTERFACE,
+        in_signature="s",
+        out_signature="b",
+        sender_keyword="sender"
+    )
+    def SetGlobalConfigPath(self, path, sender=None):
+
+        print(f"[server] sender={sender}, path={path}")
+
+        if not self.check_authorization( POLKIT_ACTIONS["SetGlobalConfigPath"], sender ):
+            raise dbus.exceptions.DBusException(
+                "org.freedesktop.DBus.Error.AccessDenied",
+                "Authentication failed"
+            )
+
+        CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+        with CONFIG_FILE.open("w") as f:
+            json.dump({"path": path}, f, indent=4)
+
+        return True
+
+
+    @dbus.service.method(
+        INTERFACE,
+        in_signature="",
+        out_signature="b"
+    )
+    def statusGlobalConfig(self):
+        if CONFIG_FILE.exists():
+            return True
+        else:
+            return False
+
+    @dbus.service.method(
+        INTERFACE,
+        in_signature="",
+        out_signature="b",
+        sender_keyword="sender"
+    )
+    def removeGlobalConfig(self, sender=None):
+        if not self.check_authorization( POLKIT_ACTIONS["removeGlobalConfig"], sender ):
+            raise dbus.exceptions.DBusException(
+                "org.freedesktop.DBus.Error.AccessDenied",
+                "Authentication failed"
+            )
+
+        if CONFIG_FILE.exists():
+            CONFIG_FILE.unlink()
+            return True
+        else:
+            return False
+
+
+
+def main():
+    DBusGMainLoop(set_as_default=True)
+
+    bus = dbus.SystemBus()
+
+    name = dbus.service.BusName(
+        SERVICE_NAME,
+        bus
+    )
+
+    KScreenSystemService(bus, OBJECT_PATH)
+
+    print("net.lliurex.KScreenSystem service running")
+
+    GLib.MainLoop().run()
+
+
+if __name__ == "__main__":
+    main()

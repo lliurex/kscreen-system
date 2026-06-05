@@ -1,0 +1,12 @@
+[Unit]
+Description=Kscreen system dbus service
+
+[Service]
+BusName=net.lliurex.KScreenSystem
+ExecStart=/usr/share/kscreensystem/kscreensystem.py
+Type=dbus
+IOSchedulingClass=idle
+
+[Install]
+WantedBy=default.target
+
