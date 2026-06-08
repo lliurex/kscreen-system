@@ -12,5 +12,4 @@ class KScreenSystemSettings : public KQuickConfigModule
     Q_OBJECT
     public:
 	KScreenSystemSettings(QObject *parent, const KPluginMetaData &data);
-	EnableSystemSettings();
 };

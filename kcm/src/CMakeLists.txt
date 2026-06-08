@@ -4,10 +4,10 @@
 
 kcmutils_add_qml_kcm(kcm_kscreensystem)
 target_sources(kcm_kscreensystem PRIVATE
-   kscreen-system.cpp
-   kscreen-system.h
+   kscreensystem.cpp
+   kscreensystem.h
 )
-target_link_libraries(kcm_time PRIVATE
+target_link_libraries(kcm_kscreensystem PRIVATE
     Qt::Quick
     KF6::CoreAddons
     KF6::KCMUtils
