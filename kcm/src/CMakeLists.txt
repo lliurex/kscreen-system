@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: BSD-2-Clause
 
-kcmutils_add_qml_kcm(kcm_kscsreensystem)
+kcmutils_add_qml_kcm(kcm_kscreensystem)
 target_sources(kcm_kscreensystem PRIVATE
    kscreen-system.cpp
    kscreen-system.h
