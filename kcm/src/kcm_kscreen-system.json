@@ -1,0 +1,21 @@
+{
+    "KPlugin": {
+        "Description": "Screen system settings",
+        "Description[ca]": "Configuracio de sistema de la pantalla",
+        "Description[es]": "Configuración del sistema de pantalla",
+        "FormFactors": [
+            "desktop",
+            "handset",
+            "tablet",
+            "mediacenter"
+        ],
+        "Icon": "preferences-system-time",
+        "Name": "Screen",
+        "Name[ca]": "Pantalla",
+        "Name[es]": "Pantalla",
+    },
+    "X-KDE-Keywords": "Screen,Display,Monitor",
+    "X-KDE-Keywords[ca]": "Pantalla,Monitor,Visualització",
+    "X-KDE-Keywords[es]": "Pantalla,Monitor,Visualización",
+    "X-KDE-System-Settings-Parent-Category": "personalization"
+}
