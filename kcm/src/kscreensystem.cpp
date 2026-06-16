@@ -6,6 +6,11 @@
 #include "kscreensystem.h"
 #include <QDebug>
 #include <KPluginFactory>
+
+#include <QDBusConnection>
+#include <QDBusMessage>
+#include <QDBusPendingReply>
+
 K_PLUGIN_CLASS_WITH_JSON(KScreenSystemSettings, "kcm_kscreensystem.json")
 
 KScreenSystemSettingsHandler::KScreenSystemSettingsHandler(QObject *parent)
@@ -14,8 +19,8 @@ KScreenSystemSettingsHandler::KScreenSystemSettingsHandler(QObject *parent)
 
 }
 
-void KScreenSystemSettingsHandler::saluda(){
-	qCritical() << "Hola que tal";
+void KScreenSystemSettingsHandler::test_function(){
+	qDebug() << "hello world";
 }
 
 

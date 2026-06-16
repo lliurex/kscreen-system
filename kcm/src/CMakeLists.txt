@@ -12,4 +12,5 @@ target_link_libraries(kcm_kscreensystem PRIVATE
     KF6::CoreAddons
     KF6::KCMUtils
     KF6::I18n
+    Qt::DBus
 )

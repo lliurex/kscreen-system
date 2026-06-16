@@ -10,7 +10,7 @@ class KScreenSystemSettingsHandler: public QObject{
     Q_OBJECT
     public:
 	explicit KScreenSystemSettingsHandler(QObject *parent);
-	Q_INVOKABLE void saluda();
+	Q_INVOKABLE void test_function();
 
 };
 
