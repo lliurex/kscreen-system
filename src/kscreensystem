@@ -3,6 +3,7 @@
 import json
 import os
 from pathlib import Path
+import shutil
 
 import dbus
 import dbus.service
@@ -77,7 +78,7 @@ class KScreenSystemService(dbus.service.Object):
         CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
         ORIGIN_PATH = Path(path)
         if ORIGIN_PATH.exists():
-            ORIGIN_PATH.copy(CONFIG_FILE)
+            shutil.copy(ORIGIN_PATH, CONFIG_FILE)
         return True
 
 
