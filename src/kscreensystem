@@ -75,10 +75,9 @@ class KScreenSystemService(dbus.service.Object):
             )
 
         CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
-
-        with CONFIG_FILE.open("w") as f:
-            json.dump({"path": path}, f, indent=4)
-
+        ORIGIN_PATH = Path(path)
+        if ORIGIN_PATH.exists():
+            ORIGIN_PATH.copy(CONFIG_FILE)
         return True
 
 
