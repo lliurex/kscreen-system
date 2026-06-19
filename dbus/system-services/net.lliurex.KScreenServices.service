@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=net.lliurex.KScreenSystem
+SystemdService=net.lliurex.KScreenSystem.service
+Exec=/bin/false

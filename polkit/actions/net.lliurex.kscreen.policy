@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<policyconfig>
+
+  <action id="net.lliurex.kscreen.updateglobalconfig">
+    <description>Set KScreen global config</description>
+    <message>Authentication is required to update system display config file</message>
+
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+
+  </action>
+  <action id="net.lliurex.kscreen.setglobalconfig">
+    <description>Set KScreen global config for new users</description>
+    <message>Authentication is required to configure system display config for new users</message>
+
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+
+  </action>
+
+  <action id="net.lliurex.kscreen.removeconfig">
+    <description>Remove KScreen global config</description>
+    <message>Authentication is required to remove system display config</message>
+
+    <defaults>
+      <allow_any>no</allow_any>
+      <allow_inactive>auth_admin</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+
+  </action>
+
+</policyconfig>

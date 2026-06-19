@@ -1,0 +1,1 @@
+cp /etc/skel/.config/kwinoutputconfig.json ~/.config/
