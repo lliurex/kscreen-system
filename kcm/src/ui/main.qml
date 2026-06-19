@@ -19,15 +19,54 @@ KCMUtils.SimpleKCM {
 		Layouts.Layout.preferredHeight: 70
 	}
 	Layouts.ColumnLayout{
+		spacing:0
+		Layouts.ColumnLayout{
 	Kirigami.InlineMessage{
-			id: revertMsg
+			id: msgCorrectApplied
 			Layouts.Layout.fillWidth: true
 			position: Kirigami.InlineMessage.Position.Header
 			type: Kirigami.MessageType.Information
-			text: i18n("Display configuration reverted")
+			text: i18n("Display configuration applied")
 			visible: false
 			showCloseButton: true
+			QQ.Connections{
+					target: kcm
+					function onSaveConfig(){
+						msgCorrectApplied.visible = true
+					}
+			}
+
 		}
+	Kirigami.InlineMessage{
+			id: msgErrorNotExistsFile
+			Layouts.Layout.fillWidth: true
+			position: Kirigami.InlineMessage.Position.Header
+			type: Kirigami.MessageType.Error
+			text: i18n("Save firstly screen settings with update button")
+			visible: false
+			showCloseButton: true
+			QQ.Connections{
+					target: kcm
+					function onErrorNotExistsFile(){
+						msgErrorNotExistsFile.visible = true
+					}
+			}
+		}
+	Kirigami.InlineMessage{
+			id: msgUpdatedFile
+			Layouts.Layout.fillWidth: true
+			position: Kirigami.InlineMessage.Position.Header
+			type: Kirigami.MessageType.Positive
+			text: i18n("File saved correctly")
+			visible: false
+			showCloseButton: true
+			QQ.Connections{
+					target: kcm
+					function onUpdatedGlobalConfig(){
+						msgUpdatedFile.visible = true
+					}
+			}
+		}}
 
 	Kirigami.FormLayout{
 		Layouts.GridLayout{
@@ -67,7 +106,6 @@ KCMUtils.SimpleKCM {
 				text: i18n("Update")	
 				onClicked:{
 					//K.KScreenSystemSettingsHandler.test_function()
-					revertMsg.visible= true
 					kcm.saveSettingsFile()
 				}
 			}

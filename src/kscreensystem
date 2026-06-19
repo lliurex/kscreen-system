@@ -16,11 +16,16 @@ OBJECT_PATH = "/net/lliurex/KScreenSystem"
 INTERFACE = "net.lliurex.KScreenSystem"
 
 POLKIT_ACTIONS = {
-        "SetGlobalConfigPath":"net.lliurex.kscreen.setconfig",
+        "updateGlobalConfig":"net.lliurex.kscreen.updateglobalconfig",
+        "setGlobalConfig":"net.lliurex.kscreen.setglobalconfig",
         "removeGlobalConfig":"net.lliurex.kscreen.removeconfig"
         }
 
-CONFIG_FILE = Path("/etc/skel/.config/kwinoutputconfig.json")
+ETC_CONFIG_FILE = Path("/etc/skel/.config/kwinoutputconfig.json")
+VAR_CONFIG_FILE = Path("/var/lib/kscreensystem/kwinoutputconfig.json")
+
+ALL_USERS_CONFIG_PATH = Path("/usr/share/kscreensystem/kscreensystemallusers.sh")
+PROFILE_D_PATH = Path("/etc/profile.d/kscreensystemallusers.sh")
 
 
 class KScreenSystemService(dbus.service.Object):
@@ -58,60 +63,122 @@ class KScreenSystemService(dbus.service.Object):
 
         return bool(result[0])
 
+    '''
 
+        DBUS Method: ExistsGlobalConfig
+
+    '''
+    @dbus.service.method(
+        INTERFACE,
+        in_signature="",
+        out_signature="b"
+    )
+    def ExistsGlobalConfig(self):
+        return VAR_CONFIG_FILE.exists()
+        
+
+    '''
+
+        DBUS Method: StatusGlobalConfig
+
+    '''
+    @dbus.service.method(
+        INTERFACE,
+        in_signature="",
+        out_signature="i"
+    )
+    def StatusGlobalConfig(self):
+        if ETC_CONFIG_FILE.exists():
+            if PROFILE_D_PATH.exists():
+                return 2
+            else:
+                return 1
+        else:
+            return 0
+
+
+    '''
+
+        DBUS Method: UpdateGlobalConfig
+        
+    '''
     @dbus.service.method(
         INTERFACE,
         in_signature="s",
         out_signature="b",
         sender_keyword="sender"
     )
-    def SetGlobalConfigPath(self, path, sender=None):
+    def UpdateGlobalConfig(self, path, sender=None):
 
-        print(f"[server] sender={sender}, path={path}")
-
-        if not self.check_authorization( POLKIT_ACTIONS["SetGlobalConfigPath"], sender ):
+        if not self.check_authorization( POLKIT_ACTIONS["updateGlobalConfig"], sender ):
             raise dbus.exceptions.DBusException(
                 "org.freedesktop.DBus.Error.AccessDenied",
                 "Authentication failed"
             )
 
-        CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
+        VAR_CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
         ORIGIN_PATH = Path(path)
         if ORIGIN_PATH.exists():
-            shutil.copy(ORIGIN_PATH, CONFIG_FILE)
+            shutil.copy(ORIGIN_PATH, VAR_CONFIG_FILE)
         return True
 
 
+
+    '''
+
+        DBUS Method: SetGlobalConfig
+
+    '''
     @dbus.service.method(
         INTERFACE,
-        in_signature="",
-        out_signature="b"
+        in_signature="b",
+        out_signature="b",
+        sender_keyword="sender"
     )
-    def statusGlobalConfig(self):
-        if CONFIG_FILE.exists():
-            return True
+    def SetGlobalConfig(self, allUsers ,sender=None):
+
+        if not self.check_authorization( POLKIT_ACTIONS["setGlobalConfig"], sender ):
+            raise dbus.exceptions.DBusException(
+                "org.freedesktop.DBus.Error.AccessDenied",
+                "Authentication failed"
+            )
+
+        if VAR_CONFIG_FILE.exists():
+            if not ETC_CONFIG_FILE.exists():
+                ETC_CONFIG_FILE.hardlink_to(VAR_CONFIG_FILE)
+            if allUsers:
+                if not PROFILE_D_PATH.exists():
+                    shutil.copy(ALL_USERS_CONFIG_PATH, PROFILE_D_PATH)
+            else:
+                if PROFILE_D_PATH.exists():
+                    PROFILE_D_PATH.unlink()
         else:
             return False
+        return True
 
+
+    '''
+
+        DBUS Method: RemoveGlobalConfig
+
+    '''
     @dbus.service.method(
         INTERFACE,
         in_signature="",
         out_signature="b",
         sender_keyword="sender"
     )
-    def removeGlobalConfig(self, sender=None):
+    def RemoveGlobalConfig(self, sender=None):
         if not self.check_authorization( POLKIT_ACTIONS["removeGlobalConfig"], sender ):
             raise dbus.exceptions.DBusException(
                 "org.freedesktop.DBus.Error.AccessDenied",
                 "Authentication failed"
             )
 
-        if CONFIG_FILE.exists():
-            CONFIG_FILE.unlink()
-            return True
-        else:
-            return False
+        if ETC_CONFIG_FILE.exists():
+            ETC_CONFIG_FILE.unlink()
 
+        return True
 
 
 def main():
