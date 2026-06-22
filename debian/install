@@ -1,0 +1,5 @@
+dbus/* /usr/share/dbus-1/
+polkit/* /usr/share/polkit-1/
+src/kscreensystem /usr/lib/kscreen-system
+src/kscreensystemallusers.sh /usr/share/kscreen-system/
+
