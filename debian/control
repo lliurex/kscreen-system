@@ -12,7 +12,6 @@ Build-Depends:
  libkf6kcmutils-dev
 Standards-Version: 4.6.2
 Homepage: https://portal.edu.gva.es/lliurex/va
-#Vcs-Browser: https://salsa.debian.org/debian/prueba
 Vcs-Git: https://github.com/lliurex/kscreen-system 
 
 Package: kscreen-system
@@ -21,5 +20,8 @@ Multi-Arch: foreign
 Depends:
  ${shlibs:Depends},
  ${misc:Depends},
-Description: <insert up to 60 chars description>
- <Insert long description, indented with spaces.>
+Description: KCM module for system configuration of KScreen 
+ This package provides a KCM module for system configuration of KScreen, the 
+ KDE display management system. It allow apply the configuration of the display
+ system for news users o force the configuration of the display system for all
+ users. 
