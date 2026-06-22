@@ -22,9 +22,9 @@ POLKIT_ACTIONS = {
         }
 
 ETC_CONFIG_FILE = Path("/etc/skel/.config/kwinoutputconfig.json")
-VAR_CONFIG_FILE = Path("/var/lib/kscreensystem/kwinoutputconfig.json")
+VAR_CONFIG_FILE = Path("/var/lib/kscreen-system/kwinoutputconfig.json")
 
-ALL_USERS_CONFIG_PATH = Path("/usr/share/kscreensystem/kscreensystemallusers.sh")
+ALL_USERS_CONFIG_PATH = Path("/usr/share/kscreen-system/kscreensystemallusers.sh")
 PROFILE_D_PATH = Path("/etc/profile.d/kscreensystemallusers.sh")
 
 
