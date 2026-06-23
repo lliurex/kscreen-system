@@ -2,6 +2,8 @@
 #
 # SPDX-License-Identifier: BSD-2-Clause
 
+add_definitions(-DTRANSLATION_DOMAIN="kcm_kscreensystem")
+
 kcmutils_add_qml_kcm(kcm_kscreensystem)
 target_sources(kcm_kscreensystem PRIVATE
    kscreensystem.cpp

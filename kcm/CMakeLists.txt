@@ -28,4 +28,6 @@ find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS
     I18n
 )
 
+ki18n_install(src/po)
+
 add_subdirectory(src)
