@@ -1,0 +1,63 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the kcm_kscreensystem package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: kcm_kscreensystem \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-22 18:38+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../ui/main.qml:29
+#, kde-format
+msgid "Display configuration applied"
+msgstr ""
+
+#: ../ui/main.qml:45
+#, kde-format
+msgid "Save firstly screen settings with update button"
+msgstr ""
+
+#: ../ui/main.qml:60
+#, kde-format
+msgid "File saved correctly"
+msgstr ""
+
+#: ../ui/main.qml:76
+#, kde-format
+msgid "Apply system kscreen settings"
+msgstr ""
+
+#: ../ui/main.qml:82
+#, kde-format
+msgid "Never"
+msgstr ""
+
+#: ../ui/main.qml:83
+#, kde-format
+msgid "Only for new users"
+msgstr ""
+
+#: ../ui/main.qml:84
+#, kde-format
+msgid "All users"
+msgstr ""
+
+#: ../ui/main.qml:102
+#, kde-format
+msgid "Use current settings as system settings"
+msgstr ""
+
+#: ../ui/main.qml:106
+#, kde-format
+msgid "Update"
+msgstr ""
